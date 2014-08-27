@@ -22,7 +22,7 @@ test_requirements = [
 setup(
     name='mailchute',
     version='0.1.0',
-    description='A mailinator-like service providing disposable email addresses',
+    description='A mailinator-like service providing disposable email address',
     long_description=readme + '\n\n' + history,
     author='Kevin J. Qiu',
     author_email='kevin@idempotent.ca',
@@ -50,5 +50,10 @@ setup(
         'Programming Language :: Python :: 3.4',
     ],
     test_suite='tests',
-    tests_require=test_requirements
+    tests_require=test_requirements,
+    entry_points={
+        'console_scripts': [
+            'mailchute=mailchute.cli:main',
+        ]
+    },
 )

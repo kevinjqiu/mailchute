@@ -1,0 +1,3 @@
+CREATE DATABASE mailchute;
+CREATE USER mailchute PASSWORD 'mailchute';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO mailchute;
