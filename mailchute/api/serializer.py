@@ -1,7 +1,24 @@
+import functools
+
+
+def response(root_key, dto_class):
+    def decorator(fn):
+        @functools.wraps(fn)
+        def wrapper(*args, **kwargs):
+            result = fn(*args, **kwargs)
+            if not isinstance(result, (list, tuple)):
+                result = [result]
+
+            return ResponseDTO(
+                root_key, list(map(dto_class, result)))
+        return wrapper
+    return decorator
+
+
 class ResponseDTO(dict):
-    def __init__(self, root_name, value):
+    def __init__(self, root_key, value):
         super(ResponseDTO, self).__init__({
-            root_name: value
+            root_key: value
         })
 
 
