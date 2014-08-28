@@ -53,7 +53,7 @@ setup(
     tests_require=test_requirements,
     entry_points={
         'console_scripts': [
-            'mailchute=mailchute.cli:main',
+            'mailchute=mailchute.smtpd.cli:main',
         ]
     },
 )

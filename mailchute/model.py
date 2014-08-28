@@ -1,5 +1,6 @@
 import uuid
 import sqlalchemy as sa
+import datetime
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -21,7 +22,7 @@ class IncomingEmail(Base):
     __tablename__ = 'incoming_email'
 
     id = sa.Column(sa.Integer, primary_key=True)
-    created_at = sa.Column(sa.DateTime)
+    created_at = sa.Column(sa.DateTime, default=datetime.datetime.now())
     sender = sa.Column(sa.String)
     recipient = sa.Column(sa.String)
     raw_message_id = sa.Column(
