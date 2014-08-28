@@ -1,6 +1,6 @@
 import asyncore
 
-from mailchute.mailchute import MailChuteSMTPServer
+from mailchute.smtpd.mailchute import MailChuteSMTPServer
 from logbook import Logger
 
 
