@@ -1,13 +1,13 @@
-"""rename from field
+"""change from field to sender
 
-Revision ID: 3436e24df10
+Revision ID: 63d21bb114
 Revises: 1633023db6f
-Create Date: 2014-08-27 00:51:39.423550
+Create Date: 2014-08-28 00:34:19.990709
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '3436e24df10'
+revision = '63d21bb114'
 down_revision = '1633023db6f'
 
 from alembic import op

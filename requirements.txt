@@ -2,3 +2,4 @@ wheel==0.23.0
 sqlalchemy>=0.9.7
 psycopg2==2.5.3
 alembic==0.6.6
+logbook==0.7.0
