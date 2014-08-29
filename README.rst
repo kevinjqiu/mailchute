@@ -17,7 +17,12 @@ A mailinator-like service providing disposable email addresses
 * Free software: BSD license
 * Documentation: https://mailchute.readthedocs.org.
 
-Features
---------
+What is Mailchute
+-----------------
 
-* TODO
+Mailchute is an open source implementation of the [mailinator](http://mailinator.com) service intended for personal use. It consists of three components:
+
+* smtpd - A simple SMTP server for receiving emails and store them
+* api - A RESTful API for retrieving stored emails
+* web - A web front-end for reading emails
+

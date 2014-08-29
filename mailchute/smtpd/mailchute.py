@@ -10,6 +10,9 @@ logger = Logger(__name__)
 
 class MailChuteSMTPServer(smtpd.SMTPServer):
     def process_message(self, peer, mailfrom, recipients, data):
+        mailfrom = mailfrom.lower()
+        recipients = map(str.lower, recipients)
+
         logger.info(
             "Incoming message from {0} to {1}".format(mailfrom, recipients))
 
