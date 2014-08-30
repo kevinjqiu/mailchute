@@ -2,14 +2,7 @@
 mailchute
 ===============================
 
-.. image:: https://badge.fury.io/py/mailchute.png
-    :target: http://badge.fury.io/py/mailchute
-
-.. image:: https://travis-ci.org/kevinjqiu/mailchute.png?branch=master
-        :target: https://travis-ci.org/kevinjqiu/mailchute
-
-.. image:: https://pypip.in/d/mailchute/badge.png
-        :target: https://pypi.python.org/pypi/mailchute
+|Build Status| |Coverage Status|
 
 
 A mailinator-like service providing disposable email addresses
@@ -26,3 +19,8 @@ Mailchute is an open source implementation of the [mailinator](http://mailinator
 * api - A RESTful API for retrieving stored emails
 * web - A web front-end for reading emails
 
+.. |Build Status| image:: https://badge.fury.io/py/mailchute.png
+    :target: http://badge.fury.io/py/mailchute
+
+.. |Coverage Status| image:: https://coveralls.io/repos/kevinjqiu/mailchute/badge.png?branch=master
+    :target: https://coveralls.io/r/kevinjqiu/mailchute?branch=master
