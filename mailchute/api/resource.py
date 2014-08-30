@@ -1,11 +1,11 @@
-from bottle import route
+import bottle
 from mailchute import db
 from mailchute.model import IncomingEmail, RawMessage
 from mailchute.api.serializer import (
     response, ResponseDTO, IncomingEmailDTO, RawMessageDTO)
 
 
-@route('/inbox/<recipient>/')
+@bottle.route('/inbox/<recipient>/')
 @response('incoming_emails', IncomingEmailDTO)
 def get_incoming_emails(recipient):
     return (
@@ -13,7 +13,7 @@ def get_incoming_emails(recipient):
     )
 
 
-@route('/inbox/<recipient>/raw_message/<raw_message_id>')
+@bottle.route('/inbox/<recipient>/raw_message/<raw_message_id>')
 @response('raw_messages', RawMessageDTO)
 def get_raw_message(recipient, raw_message_id):
     return (
@@ -22,3 +22,6 @@ def get_raw_message(recipient, raw_message_id):
         .filter(RawMessage.raw_message_id == raw_message_id)
         .one()
     )
+
+
+app = bottle.app()

@@ -1,6 +1,12 @@
-from bottle import run
+import bottle
+from mailchute import settings
+from mailchute.api.resource import app
 
 
 def main():
     import mailchute.api.resource as _
-    run(host='localhost', port=8080)
+    bottle.run(
+        app,
+        settings.API['host'],
+        settings.API['port'],
+    )

@@ -1,7 +1,17 @@
+from mailchute.model import IncomingEmail, RawMessage
 from mailchute import db
 
 
-class BaseTestCase(object):
+class FixtureCreatorMixin(object):
+    def create_incoming_email(self, **kwargs):
+        raw_message = kwargs.pop('raw_message', '')
+        obj = IncomingEmail(**kwargs)
+        obj.raw_message = RawMessage(message=raw_message)
+        db.session.add(obj)
+        db.session.commit()
+
+
+class BaseTestCase(FixtureCreatorMixin):
     IGNORED_TABLES = set([
         'alembic_version',
     ])
