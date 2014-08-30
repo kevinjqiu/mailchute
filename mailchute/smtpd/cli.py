@@ -8,7 +8,7 @@ from logbook import Logger
 logger = Logger(__name__)
 
 
-def main():
+def main(): # pragma: no cover
     address, port = settings.SMTPD['host'], settings.SMTPD['port']
 
     MailchuteSMTPServer((address, port), None)

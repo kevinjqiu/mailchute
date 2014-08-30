@@ -45,7 +45,7 @@ test-all:
 coverage:
 	rm -f mailchute-test.db
 	DB_URL=sqlite:///mailchute-test.db alembic upgrade head
-	DB_URL=sqlite:///mailchute-test.db py.test --cov mailchute --cov-report term-missing tests/
+	DB_URL=sqlite:///mailchute-test.db py.test --cov mailchute --cov tests --cov-report term-missing tests/
 
 docs:
 	rm -f docs/mailchute.rst

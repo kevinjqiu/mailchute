@@ -3,7 +3,7 @@ from mailchute import settings
 from mailchute.api.resource import app
 
 
-def main():
+def main(): # pragma: no cover
     import mailchute.api.resource as _
     bottle.run(
         app,
