@@ -6,10 +6,12 @@ from mailchute import db
 from mailchute.api.resource import app
 
 
-class TestGetIncomingEmail(BaseTestCase):
+class ApiTestCase(BaseTestCase):
     def setup(self):
         self.app = TestApp(app)
 
+
+class TestGetIncomingEmail(ApiTestCase):
     def test_no_incoming_email_for_inbox(self):
         response = self.app.get('/inbox/foo@bar.com/')
         eq_('200 OK', response.status)
@@ -31,3 +33,9 @@ class TestGetIncomingEmail(BaseTestCase):
             'foo@bar.com')
         eq_(response.json['incoming_emails'][0]['sender'],
             'foobar@example.com')
+
+
+class TestGetRawMessage(ApiTestCase):
+    def test_message_not_found(self):
+        response = self.app.get('/inbox/foo@bar.com/raw_message/0ab55e')
+        eq_('404 NOT FOUND', response.status)

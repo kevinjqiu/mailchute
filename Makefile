@@ -43,7 +43,9 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source mailchute setup.py test
+	rm -f mailchute-test.db
+	DB_URL=sqlite:///mailchute-test.db alembic upgrade head
+	DB_URL=sqlite:///mailchute-test.db py.test --cov mailchute tests/
 	coverage report -m
 	coverage html
 	open htmlcov/index.html

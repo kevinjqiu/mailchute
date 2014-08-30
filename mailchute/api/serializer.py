@@ -1,16 +1,23 @@
 import functools
+from mailchute.api.exception import NotFound
 
 
 def response(root_key, dto_class):
     def decorator(fn):
         @functools.wraps(fn)
         def wrapper(*args, **kwargs):
-            result = fn(*args, **kwargs)
-            if not isinstance(result, (list, tuple)):
-                result = [result]
+            try:
+                result = fn(*args, **kwargs)
+                if not isinstance(result, (list, tuple)):
+                    result = [result]
 
-            return ResponseDTO(
-                root_key, list(map(dto_class, result)))
+                return ResponseDTO(
+                    root_key, list(map(dto_class, result)))
+            except NotFound:
+                from bottle import response
+                response.status = 404
+                return {}
+
         return wrapper
     return decorator
 
