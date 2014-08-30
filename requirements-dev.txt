@@ -1,2 +1,3 @@
+-r requirements.txt
 pytest==2.6.1
 WebTest==2.0.15
