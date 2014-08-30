@@ -2,8 +2,7 @@ import sqlalchemy as sa
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
-engine = sa.create_engine(
-    'postgresql+psycopg2://mailchute:mailchute@localhost/mailchute')
+engine = sa.create_engine('sqlite:///mailchute.db')
 
 
 Session = scoped_session(sessionmaker(bind=engine))

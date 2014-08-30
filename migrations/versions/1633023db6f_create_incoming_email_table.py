@@ -25,7 +25,7 @@ def upgrade():
         'incoming_email',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('created_at', sa.DateTime),
-        sa.Column('from', sa.String(255)),
+        sa.Column('sender', sa.String(255)),
         sa.Column('recipient', sa.String(255)),
         sa.Column('raw_message_id', sa.String(32)),
     )

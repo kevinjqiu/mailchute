@@ -11,13 +11,9 @@ except ImportError:
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = [
-    # TODO: put package requirements here
-]
+requirements = open('requirements.txt').readlines()
 
-test_requirements = [
-    # TODO: put package test requirements here
-]
+test_requirements = open('requirements-dev.txt').readlines()
 
 setup(
     name='mailchute',
