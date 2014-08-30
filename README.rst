@@ -19,8 +19,8 @@ Mailchute is an open source implementation of the [mailinator](http://mailinator
 * api - A RESTful API for retrieving stored emails
 * web - A web front-end for reading emails
 
-.. |Build Status| image:: https://badge.fury.io/py/mailchute.png
-    :target: http://badge.fury.io/py/mailchute
+.. |Build Status| image:: https://travis-ci.org/kevinjqiu/mailchute.png?branch=master
+    :target: https://travis-ci.org/kevinjqiu/mailchute
 
 .. |Coverage Status| image:: https://coveralls.io/repos/kevinjqiu/mailchute/badge.png?branch=master
     :target: https://coveralls.io/r/kevinjqiu/mailchute?branch=master
