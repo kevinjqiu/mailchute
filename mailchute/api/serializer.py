@@ -16,7 +16,7 @@ def response(root_key, dto_class):
             except NotFound:
                 from bottle import response
                 response.status = 404
-                return {}
+                return {'error': {'message': 'Resource Not Found'}}
 
         return wrapper
     return decorator

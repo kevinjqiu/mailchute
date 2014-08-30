@@ -7,6 +7,6 @@ def main():
     import mailchute.api.resource as _
     bottle.run(
         app,
-        settings.API['host'],
-        settings.API['port'],
+        host=settings.API['host'],
+        port=settings.API['port'],
     )

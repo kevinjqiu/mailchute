@@ -25,7 +25,7 @@ def get_raw_message(recipient, raw_message_id):
             .filter(RawMessage.raw_message_id == raw_message_id)
             .one()
         )
-    except sqlalchemy.orm.exec.NoResultFound as e:
+    except sqlalchemy.orm.exc.NoResultFound as e:
         raise NotFound()
 
 

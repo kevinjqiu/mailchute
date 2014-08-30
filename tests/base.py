@@ -9,6 +9,7 @@ class FixtureCreatorMixin(object):
         obj.raw_message = RawMessage(message=raw_message)
         db.session.add(obj)
         db.session.commit()
+        return obj
 
 
 class BaseTestCase(FixtureCreatorMixin):
