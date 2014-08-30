@@ -1,0 +1,1 @@
+Ui.ApplicationAdapter = DS.FixtureAdapter;
