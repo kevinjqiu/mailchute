@@ -1,6 +1,7 @@
 import asyncore
 
-from mailchute.smtpd.mailchute import MailChuteSMTPServer
+from mailchute.smtpd.mailchute import MailchuteSMTPServer
+from mailchute import settings
 from logbook import Logger
 
 
@@ -8,9 +9,9 @@ logger = Logger(__name__)
 
 
 def main():
-    address, port = '0.0.0.0', 25
+    address, port = settings.SMTPD['host'], settings.SMTPD['port']
 
-    MailChuteSMTPServer((address, port), None)
+    MailchuteSMTPServer((address, port), None)
     logger.info(
         "Mailchute server started listening at {0}:{1}".format(address, port))
     try:

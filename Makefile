@@ -35,7 +35,9 @@ lint:
 	flake8 mailchute tests
 
 test:
-	python setup.py test
+	rm mailchute-test.db
+	DB_URL=sqlite:///mailchute-test.db alembic upgrade head
+	DB_URL=sqlite:///mailchute-test.db py.test
 
 test-all:
 	tox

@@ -8,8 +8,8 @@ from logbook import Logger
 logger = Logger(__name__)
 
 
-class MailChuteSMTPServer(smtpd.SMTPServer):
-    def process_message(self, peer, mailfrom, recipients, data):
+class MessageProcessor(object):
+    def __call__(self, peer, mailfrom, recipients, data):
         try:
             mailfrom = mailfrom.lower()
             recipients = list(map(str.lower, recipients))
@@ -32,3 +32,8 @@ class MailChuteSMTPServer(smtpd.SMTPServer):
         except Exception as e:
             logger.exception(e)
             db.session.rollback()
+
+
+
+class MailchuteSMTPServer(smtpd.SMTPServer):
+    process_message = MessageProcessor()
