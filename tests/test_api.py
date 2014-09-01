@@ -11,7 +11,7 @@ class ApiTestCase(BaseTestCase):
 
 class TestGetInbox(ApiTestCase):
     def test_no_incoming_email_for_inbox(self):
-        response = self.app.get('/inboxes/foo@bar.com/')
+        response = self.app.get('/inboxes/foo@bar.com')
         assert '200 OK' == response.status
         expected = {
             'inboxes': [{
@@ -27,7 +27,7 @@ class TestGetInbox(ApiTestCase):
             sender='foobar@example.com',
             recipient='foo@bar.com',
             raw_message='RAW')
-        response = self.app.get('/inboxes/foo@bar.com/')
+        response = self.app.get('/inboxes/foo@bar.com')
 
         assert '200 OK' == response.status
         assert 1 == len(response.json['inboxes'])
