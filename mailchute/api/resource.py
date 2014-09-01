@@ -10,7 +10,7 @@ from mailchute.api.serializer import (
 app = bottle.app()
 
 
-@app.route('/inbox/<recipient>/')
+@app.route('/inboxes/<recipient>/')
 @response('inboxes', InboxDTO)
 def get_inbox(recipient):
     emails = (
@@ -23,7 +23,7 @@ def get_inbox(recipient):
     })
 
 
-@app.route('/inbox/<recipient>/raw_message/<raw_message_id>')
+@app.route('/inboxes/<recipient>/raw_messages/<raw_message_id>')
 @response('raw_messages', RawMessageDTO)
 def get_raw_message(recipient, raw_message_id):
     try:

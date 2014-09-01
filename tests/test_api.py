@@ -11,7 +11,7 @@ class ApiTestCase(BaseTestCase):
 
 class TestGetInbox(ApiTestCase):
     def test_no_incoming_email_for_inbox(self):
-        response = self.app.get('/inbox/foo@bar.com/')
+        response = self.app.get('/inboxes/foo@bar.com/')
         assert '200 OK' == response.status
         expected = {
             'inboxes': [{
@@ -27,7 +27,7 @@ class TestGetInbox(ApiTestCase):
             sender='foobar@example.com',
             recipient='foo@bar.com',
             raw_message='RAW')
-        response = self.app.get('/inbox/foo@bar.com/')
+        response = self.app.get('/inboxes/foo@bar.com/')
 
         assert '200 OK' == response.status
         assert 1 == len(response.json['inboxes'])
@@ -43,7 +43,7 @@ class TestGetInbox(ApiTestCase):
 class TestGetRawMessage(ApiTestCase):
     def test_message_not_found(self):
         response = self.app.get(
-            '/inbox/foo@bar.com/raw_message/0ab55e', status=404)
+            '/inboxes/foo@bar.com/raw_messages/0ab55e', status=404)
         assert {'error': {'message': 'Resource Not Found'}} == \
             response.json
 
@@ -53,7 +53,7 @@ class TestGetRawMessage(ApiTestCase):
             recipient='foo@bar.com',
             raw_message='RAW')
 
-        response = self.app.get('/inbox/foo@bar.com/raw_message/{0}'.format(
+        response = self.app.get('/inboxes/foo@bar.com/raw_messages/{0}'.format(
             email.raw_message_id))
 
         assert 1 == len(response.json['raw_messages'])
