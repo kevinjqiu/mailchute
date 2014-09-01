@@ -9,11 +9,18 @@ class ApiTestCase(BaseTestCase):
         self.app = TestApp(app)
 
 
-class TestGetIncomingEmail(ApiTestCase):
+class TestGetInbox(ApiTestCase):
     def test_no_incoming_email_for_inbox(self):
         response = self.app.get('/inbox/foo@bar.com/')
         assert '200 OK' == response.status
-        assert {'incoming_emails': []} == response.json
+        expected = {
+            'inboxes': [{
+                'emails': [],
+                'id': 'foo@bar.com',
+                'name': 'foo@bar.com',
+                'num_of_emails': 0
+            }]}
+        assert expected == response.json
 
     def test_with_incoming_email(self):
         self.create_incoming_email(
@@ -23,10 +30,13 @@ class TestGetIncomingEmail(ApiTestCase):
         response = self.app.get('/inbox/foo@bar.com/')
 
         assert '200 OK' == response.status
-        assert 1 == len(response.json['incoming_emails'])
-        assert response.json['incoming_emails'][0]['recipient'] == \
+        assert 1 == len(response.json['inboxes'])
+        assert 'foo@bar.com' == response.json['inboxes'][0]['id']
+        assert 'foo@bar.com' == response.json['inboxes'][0]['name']
+        assert 1 == len(response.json['inboxes'][0]['emails'])
+        assert response.json['inboxes'][0]['emails'][0]['recipient'] == \
             'foo@bar.com'
-        assert response.json['incoming_emails'][0]['sender'] == \
+        assert response.json['inboxes'][0]['emails'][0]['sender'] == \
             'foobar@example.com'
 
 

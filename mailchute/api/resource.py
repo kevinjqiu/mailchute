@@ -4,18 +4,26 @@ from mailchute import db
 from mailchute.api.exception import NotFound
 from mailchute.model import IncomingEmail, RawMessage
 from mailchute.api.serializer import (
-    response, ResponseDTO, IncomingEmailDTO, RawMessageDTO)
+    response, ResponseDTO, InboxDTO, IncomingEmailDTO, RawMessageDTO)
 
 
-@bottle.route('/inbox/<recipient>/')
-@response('incoming_emails', IncomingEmailDTO)
-def get_incoming_emails(recipient):
-    return (
+app = bottle.app()
+
+
+@app.route('/inbox/<recipient>/')
+@response('inboxes', InboxDTO)
+def get_inbox(recipient):
+    emails = (
         db.session.query(IncomingEmail).filter_by(recipient=recipient).all()
     )
 
+    return type('inbox', (object,), {
+        'name': recipient,
+        'emails': emails,
+    })
 
-@bottle.route('/inbox/<recipient>/raw_message/<raw_message_id>')
+
+@app.route('/inbox/<recipient>/raw_message/<raw_message_id>')
 @response('raw_messages', RawMessageDTO)
 def get_raw_message(recipient, raw_message_id):
     try:
@@ -29,4 +37,10 @@ def get_raw_message(recipient, raw_message_id):
         raise NotFound()
 
 
-app = bottle.app()
+@app.hook('after_request')
+def enable_cors():
+    ALLOWED_METHODS = 'PUT, GET, POST, DELETE, OPTIONS'
+    ALLOWED_HEADERS = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
+    bottle.response.headers['Access-Control-Allow-Origin'] = '*'
+    bottle.response.headers['Access-Control-Allow-Methods'] = ALLOWED_METHODS
+    bottle.response.headers['Access-Control-Allow-Headers'] = ALLOWED_HEADERS
