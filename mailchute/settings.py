@@ -16,17 +16,17 @@ def env(env_key, default):
 
 
 DB = {
-    'url': env('DB_URL', 'sqlite:///mailchute.db'),
+    'url': env('MAILCHUTE_DB_URL', 'sqlite:///mailchute.db'),
 }
 
 SMTPD = {
-    'host': env('SMTPD_HOST', '0.0.0.0'),
-    'port': env('SMTPD_PORT', 25),
+    'host': env('MAILCHUTE_SMTPD_HOST', '0.0.0.0'),
+    'port': env('MAILCHUTE_SMTPD_PORT', 25),
 }
 
 API = {
-    'host': env('API_HOST', '0.0.0.0'),
-    'port': env('API_PORT', '8080'),
+    'host': env('MAILCHUTE_API_HOST', '0.0.0.0'),
+    'port': env('MAILCHUTE_API_PORT', '8080'),
 }
 
 RECEIVER_DOMAIN = env('MAILCHUTE_RECEIVER_DOMAIN', None)
