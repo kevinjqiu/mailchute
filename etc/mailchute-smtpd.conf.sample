@@ -4,4 +4,4 @@ process_name=mailchute-smtpd
 numprocs=1
 user=root ;; change to smtpd
 directory=/home/kevin/mailchute
-environment=DB_URL="sqlite:////home/kevin/mailchute/mailchute.db"
+environment=MAILCHUTE_DB_URL="sqlite:////home/kevin/mailchute/mailchute.db"
