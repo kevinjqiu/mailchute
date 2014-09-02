@@ -17,14 +17,16 @@ class MessageProcessor(object):
             logger.info(
                 "Incoming message from {0} to {1}".format(mailfrom, recipients))
 
-            Parser().parsestr(data)
+            email = Parser().parsestr(data)
 
             raw_message = RawMessage(message=data)
 
             for recipient in recipients:
                 incoming_email = IncomingEmail(
                     sender=mailfrom, recipient=recipient,
-                    raw_message=raw_message)
+                    raw_message=raw_message,
+                    subject=email['subject'],
+                )
                 db.session.add(incoming_email)
 
             db.session.commit()

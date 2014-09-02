@@ -1,5 +1,22 @@
+import os.path
+
 from mailchute.model import IncomingEmail, RawMessage
 from mailchute import db
+
+
+FIXTURE_DIR = os.path.join(
+    os.path.dirname(__file__),
+    'fixtures')
+
+
+class _Fixture(object):
+    def __getattr__(self, attr):
+        fixture_path = os.path.join(FIXTURE_DIR, attr.lower())
+        with open(fixture_path) as f:
+            return f.read()
+
+
+Fixture = _Fixture()
 
 
 class FixtureCreatorMixin(object):
