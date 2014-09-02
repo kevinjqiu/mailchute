@@ -25,6 +25,7 @@ class IncomingEmail(Base):
     created_at = sa.Column(sa.DateTime, default=datetime.datetime.now())
     sender = sa.Column(sa.String)
     recipient = sa.Column(sa.String)
+    subject = sa.Column(sa.String)
     raw_message_id = sa.Column(
         sa.String(32), sa.ForeignKey('raw_message.raw_message_id'))
     raw_message = sa.orm.relationship(RawMessage)
