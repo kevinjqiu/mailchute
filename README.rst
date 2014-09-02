@@ -13,7 +13,7 @@ A mailinator-like service providing disposable email addresses
 What is Mailchute
 -----------------
 
-Mailchute is an open source implementation of the [mailinator](http://mailinator.com) service intended for personal use. It consists of three components:
+Mailchute is an open source implementation of the `mailinator <http://mailinator.com>`__ service intended for personal use. It consists of three components:
 
 * smtpd - A simple SMTP server for receiving emails and store them
 * api - A RESTful API for retrieving stored emails
