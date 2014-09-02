@@ -1,5 +1,5 @@
 Received: by mail-wi0-f175.google.com with SMTP id ho1so12888299wib.14
-        for <foobar@mail.idempotent.ca>; Mon, 01 Sep 2014 09:27:22 -0700 (PDT)
+        for <janesmith@test.com>; Mon, 01 Sep 2014 09:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:date:message-id:subject:from:to:content-type;
@@ -17,8 +17,8 @@ Received: by 10.217.7.195 with HTTP; Mon, 1 Sep 2014 09:27:22 -0700 (PDT)
 Date: Mon, 1 Sep 2014 12:27:22 -0400
 Message-ID: <CADGaL_EtVzwtFGY3u7qeumu5iu76FeWV2uH2d8WbJ0E=Mfm3LQ@mail.gmail.com>
 Subject: another test
-From: Kevin Qiu <kevin.jing.qiu@gmail.com>
-To: foobar@mail.idempotent.ca
+From: johndoe@example.com
+To: janesmith@test.com
 Content-Type: multipart/alternative; boundary=047d7bfd06163b72730502037ad0
 
 --047d7bfd06163b72730502037ad0
