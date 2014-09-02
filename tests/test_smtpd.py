@@ -2,6 +2,7 @@ from tests.base import BaseTestCase, Fixture
 from mailchute import db
 from mailchute.smtpd.mailchute import MessageProcessor
 from mailchute.model import IncomingEmail
+from unittest.mock import patch
 
 
 class TestMessageProcessor(BaseTestCase):
@@ -44,7 +45,9 @@ class TestMessageProcessor(BaseTestCase):
         assert 1 == len(emails)
         assert 'another test' == emails[0].subject
 
-    def test_process_message_recipient_wrong_domain(self):
+    @patch('mailchute.smtpd.mailchute.settings')
+    def test_process_message_recipient_wrong_domain(self, settings):
+        settings.RECEIVER_DOMAIN = 'receiver.com'
         self.message_processor(
             'PEER',
             'johndoe@example.com',
@@ -53,3 +56,15 @@ class TestMessageProcessor(BaseTestCase):
         )
         emails = db.session.query(IncomingEmail).all()
         assert 0 == len(emails)
+
+    @patch('mailchute.smtpd.mailchute.settings')
+    def test_process_message_no_check_recipient_domain(self, settings):
+        settings.RECEIVER_DOMAIN = None
+        self.message_processor(
+            'PEER',
+            'johndoe@example.com',
+            ['janesmith@test.com'],
+            'DATA',
+        )
+        emails = db.session.query(IncomingEmail).all()
+        assert 1 == len(emails)
