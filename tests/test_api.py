@@ -26,7 +26,9 @@ class TestGetInbox(ApiTestCase):
         self.create_incoming_email(
             sender='foobar@example.com',
             recipient='foo@bar.com',
-            raw_message='RAW')
+            raw_message='RAW',
+            subject='subject',
+        )
         response = self.app.get('/inboxes/foo@bar.com')
 
         assert '200 OK' == response.status
@@ -38,6 +40,8 @@ class TestGetInbox(ApiTestCase):
             'foo@bar.com'
         assert response.json['inboxes'][0]['emails'][0]['sender'] == \
             'foobar@example.com'
+        assert response.json['inboxes'][0]['emails'][0]['subject'] == \
+            'subject'
 
 
 class TestGetRawMessage(ApiTestCase):

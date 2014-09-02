@@ -47,6 +47,7 @@ class IncomingEmailDTO(dict):
             sender=model.sender,
             recipient=model.recipient,
             raw_message_id=model.raw_message_id,
+            subject=model.subject,
             # TODO: add link to raw_message
         )
 
