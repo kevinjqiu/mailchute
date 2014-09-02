@@ -32,16 +32,25 @@ class TestGetInbox(ApiTestCase):
         response = self.app.get('/inboxes/foo@bar.com')
 
         assert '200 OK' == response.status
-        assert 1 == len(response.json['inboxes'])
-        assert 'foo@bar.com' == response.json['inboxes'][0]['id']
-        assert 'foo@bar.com' == response.json['inboxes'][0]['name']
-        assert 1 == len(response.json['inboxes'][0]['emails'])
-        assert response.json['inboxes'][0]['emails'][0]['recipient'] == \
-            'foo@bar.com'
-        assert response.json['inboxes'][0]['emails'][0]['sender'] == \
-            'foobar@example.com'
-        assert response.json['inboxes'][0]['emails'][0]['subject'] == \
-            'subject'
+        response_json = dict(response.json)
+        response_json['inboxes'][0]['emails'][0]['created_at'] = '$TIME'
+        response_json['inboxes'][0]['emails'][0]['raw_message_id'] = '$ID'
+
+        expected = {
+            'inboxes': [{
+                'num_of_emails': 1,
+                'id': 'foo@bar.com',
+                'emails': [{
+                    'created_at': '$TIME',
+                    'raw_message_id': '$ID',
+                    'subject': 'subject',
+                    'recipient':
+                    'foo@bar.com',
+                    'id': 1,
+                    'sender': 'foobar@example.com'
+                }],
+                'name': 'foo@bar.com'}]}
+        assert expected == response_json
 
 
 class TestGetRawMessage(ApiTestCase):
@@ -59,6 +68,15 @@ class TestGetRawMessage(ApiTestCase):
 
         response = self.app.get('/inboxes/foo@bar.com/raw_messages/{0}'.format(
             email.raw_message_id))
+        response_json = dict(response.json)
+        response_json['raw_messages'][0]['id'] = '$ID'
 
-        assert 1 == len(response.json['raw_messages'])
-        assert 'RAW' == response.json['raw_messages'][0]['message']
+        expected = {
+            'raw_messages': [{
+                'message': 'RAW',
+                'id': '$ID',
+            }]
+        }
+
+        assert '200 OK' == response.status
+        assert expected == response_json
