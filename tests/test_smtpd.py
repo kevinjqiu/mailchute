@@ -43,3 +43,13 @@ class TestMessageProcessor(BaseTestCase):
         emails = db.session.query(IncomingEmail).all()
         assert 1 == len(emails)
         assert 'another test' == emails[0].subject
+
+    def test_process_message_recipient_wrong_domain(self):
+        self.message_processor(
+            'PEER',
+            'johndoe@example.com',
+            ['janesmith@test.com'],
+            'DATA',
+        )
+        emails = db.session.query(IncomingEmail).all()
+        assert 0 == len(emails)
