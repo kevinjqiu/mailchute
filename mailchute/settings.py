@@ -28,3 +28,5 @@ API = {
     'host': env('API_HOST', '0.0.0.0'),
     'port': env('API_PORT', '8080'),
 }
+
+RECEIVER_DOMAIN = env('MAILCHUTE_RECEIVER_DOMAIN', None)
