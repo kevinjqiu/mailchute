@@ -55,50 +55,6 @@ class TestGetEmail(ApiTestCase):
         assert expected == response_json
 
 
-# class TestGetInbox(ApiTestCase):
-#     def test_no_incoming_email_for_inbox(self):
-#         response = self.app.get('/inboxes/foo@bar.com')
-#         assert '200 OK' == response.status
-#         expected = {
-#             'inboxes': [{
-#                 'emails': [],
-#                 'id': 'foo@bar.com',
-#                 'name': 'foo@bar.com',
-#                 'num_of_emails': 0
-#             }]}
-#         assert expected == response.json
-
-#     def test_with_incoming_email(self):
-#         self.create_incoming_email(
-#             sender='foobar@example.com',
-#             recipient='foo@bar.com',
-#             raw_message='RAW',
-#             subject='subject',
-#         )
-#         response = self.app.get('/inboxes/foo@bar.com')
-
-#         assert '200 OK' == response.status
-#         response_json = dict(response.json)
-#         response_json['inboxes'][0]['emails'][0]['created_at'] = '$TIME'
-#         response_json['inboxes'][0]['emails'][0]['raw_message_id'] = '$ID'
-
-#         expected = {
-#             'inboxes': [{
-#                 'num_of_emails': 1,
-#                 'id': 'foo@bar.com',
-#                 'emails': [{
-#                     'created_at': '$TIME',
-#                     'raw_message_id': '$ID',
-#                     'subject': 'subject',
-#                     'recipient':
-#                     'foo@bar.com',
-#                     'id': 1,
-#                     'sender': 'foobar@example.com'
-#                 }],
-#                 'name': 'foo@bar.com'}]}
-#         assert expected == response_json
-
-
 class TestGetRawMessage(ApiTestCase):
     def test_message_not_found(self):
         response = self.app.get(

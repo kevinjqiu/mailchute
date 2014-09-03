@@ -4,7 +4,7 @@ from mailchute import db
 from mailchute.api.exception import NotFound, BadRequest
 from mailchute.model import IncomingEmail, RawMessage
 from mailchute.api.serializer import (
-    response, ResponseDTO, InboxDTO, IncomingEmailDTO, RawMessageDTO)
+    response, InboxDTO, IncomingEmailDTO, RawMessageDTO)
 
 
 app = bottle.app()
@@ -16,19 +16,10 @@ def get_emails():
     inbox = bottle.request.query.get('inbox', None)
     if not inbox:
         raise BadRequest("'inbox' must be specified")
-
-
-@app.route('/inboxes/<recipient>')
-@response('inboxes', InboxDTO)
-def get_inbox(recipient):
     emails = (
-        db.session.query(IncomingEmail).filter_by(recipient=recipient).all()
+        db.session.query(IncomingEmail).filter_by(recipient=inbox).all()
     )
-
-    return type('inbox', (object,), {
-        'name': recipient,
-        'emails': emails,
-    })
+    return emails
 
 
 @app.route('/inboxes/<recipient>/raw_messages/<raw_message_id>')
