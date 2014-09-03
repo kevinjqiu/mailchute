@@ -1,5 +1,6 @@
+import bottle
 import functools
-from mailchute.api.exception import NotFound
+from mailchute.api.exception import NotFound, BadRequest
 
 
 def response(root_key, dto_class):
@@ -14,9 +15,12 @@ def response(root_key, dto_class):
                 return ResponseDTO(
                     root_key, list(map(dto_class, result)))
             except NotFound:
-                from bottle import response
-                response.status = 404
+                bottle.response.status = 404
                 return {'error': {'message': 'Resource Not Found'}}
+            except BadRequest as e:
+                bottle.response.status = 400
+                return {'error': {'message': str(e)}}
+
 
         return wrapper
     return decorator
