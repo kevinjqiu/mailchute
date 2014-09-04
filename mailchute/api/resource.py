@@ -4,7 +4,7 @@ from mailchute import db
 from mailchute.api.exception import NotFound, BadRequest
 from mailchute.model import IncomingEmail, RawMessage
 from mailchute.api.serializer import (
-    response, InboxDTO, IncomingEmailDTO, RawMessageDTO)
+    response, IncomingEmailDTO, RawMessageDTO)
 
 
 app = bottle.app()
@@ -22,13 +22,12 @@ def get_emails():
     return emails
 
 
-@app.route('/inboxes/<recipient>/raw_messages/<raw_message_id>')
+@app.route('/raw_messages/<raw_message_id>')
 @response('raw_messages', RawMessageDTO)
-def get_raw_message(recipient, raw_message_id):
+def get_raw_message(raw_message_id):
     try:
         return (
             db.session.query(RawMessage).join(IncomingEmail)
-            .filter(IncomingEmail.recipient == recipient)
             .filter(RawMessage.raw_message_id == raw_message_id)
             .one()
         )
