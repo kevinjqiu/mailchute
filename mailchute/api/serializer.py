@@ -21,7 +21,6 @@ def response(root_key, dto_class):
                 bottle.response.status = 400
                 return {'error': {'message': str(e)}}
 
-
         return wrapper
     return decorator
 
@@ -52,7 +51,6 @@ class IncomingEmailDTO(dict):
             recipient=model.recipient,
             raw_message=model.raw_message_id,
             subject=model.subject,
-            # TODO: add link to raw_message
         )
 
 
