@@ -26,7 +26,7 @@ class TestDeleteEmail(ApiTestCase):
             subject='subject',
         )
         response = self.app.delete('/emails/{}'.format(email1.id), status=200)
-        assert '' == response.body
+        assert b'' == response.body
         emails = session.query(IncomingEmail).all()
         assert 1 == len(emails)
         assert email2.id == emails[0].id
@@ -65,12 +65,12 @@ class TestGetEmail(ApiTestCase):
         assert '200 OK' == response.status
         response_json = dict(response.json)
         response_json['emails'][0]['created_at'] = '$TIME'
-        response_json['emails'][0]['raw_message_id'] = '$ID'
+        response_json['emails'][0]['raw_message'] = '$ID'
 
         expected = {
             'emails': [{
                 'created_at': '$TIME',
-                'raw_message_id': '$ID',
+                'raw_message': '$ID',
                 'subject': 'subject',
                 'recipient':
                 'foo@bar.com',

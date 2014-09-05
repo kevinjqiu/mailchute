@@ -3,17 +3,24 @@ import functools
 from mailchute.api.exception import NotFound, BadRequest
 
 
+CONTENT_TYPE = 'application/json'
+
+
 def response(root_key, dto_class):
     def decorator(fn):
         @functools.wraps(fn)
         def wrapper(*args, **kwargs):
             try:
+                bottle.response.content_type = CONTENT_TYPE
                 result = fn(*args, **kwargs)
                 if not isinstance(result, (list, tuple)):
                     result = [result]
 
-                return ResponseDTO(
-                    root_key, list(map(dto_class, result)))
+                if dto_class is None:
+                    return ''
+                else:
+                    return ResponseDTO(
+                        root_key, list(map(dto_class, result)))
             except NotFound:
                 bottle.response.status = 404
                 return {'error': {'message': 'Resource Not Found'}}

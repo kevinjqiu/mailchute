@@ -10,7 +10,7 @@ from mailchute.api.serializer import (
 app = bottle.app()
 
 
-@app.route('/emails')
+@app.route('/emails', ['GET'])
 @response('emails', IncomingEmailDTO)
 def get_emails():
     inbox = bottle.request.query.get('inbox', None)
@@ -20,6 +20,17 @@ def get_emails():
         db.session.query(IncomingEmail).filter_by(recipient=inbox).all()
     )
     return emails
+
+
+@app.route('/emails/<email_id:int>', ['DELETE'])
+@response('emails', None)
+def delete_email(email_id):
+    if not db.session.query(IncomingEmail).filter_by(id=email_id).count():
+        raise NotFound
+
+    model = db.session.query(IncomingEmail).filter_by(id=email_id).one()
+    db.session.delete(model)
+    db.session.commit()
 
 
 @app.route('/raw_messages/<raw_message_id>')
