@@ -50,7 +50,7 @@ class IncomingEmailDTO(dict):
             created_at=model.created_at.isoformat(),
             sender=model.sender,
             recipient=model.recipient,
-            raw_message_id=model.raw_message_id,
+            raw_message=model.raw_message_id,
             subject=model.subject,
             # TODO: add link to raw_message
         )
