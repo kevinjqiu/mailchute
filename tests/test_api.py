@@ -2,11 +2,37 @@ from webtest import TestApp
 from tests.base import BaseTestCase
 
 from mailchute.api.resource import app
+from mailchute.db import session
+from mailchute.model import IncomingEmail
 
 
 class ApiTestCase(BaseTestCase):
     def setup(self):
         self.app = TestApp(app)
+
+
+class TestDeleteEmail(ApiTestCase):
+    def test_delete_existing_email(self):
+        email1 = self.create_incoming_email(
+            sender='foobar@example.com',
+            recipient='foo@bar.com',
+            raw_message='RAW',
+            subject='subject',
+        )
+        email2 = self.create_incoming_email(
+            sender='foobar@example.com',
+            recipient='foo-test@bar.com',
+            raw_message='RAW',
+            subject='subject',
+        )
+        response = self.app.delete('/emails/{}'.format(email1.id), status=200)
+        assert b'' == response.body
+        emails = session.query(IncomingEmail).all()
+        assert 1 == len(emails)
+        assert email2.id == emails[0].id
+
+    def test_delete_non_existing_email(self):
+        self.app.delete('/emails/99', status=404)
 
 
 class TestGetEmail(ApiTestCase):
@@ -39,12 +65,12 @@ class TestGetEmail(ApiTestCase):
         assert '200 OK' == response.status
         response_json = dict(response.json)
         response_json['emails'][0]['created_at'] = '$TIME'
-        response_json['emails'][0]['raw_message_id'] = '$ID'
+        response_json['emails'][0]['raw_message'] = '$ID'
 
         expected = {
             'emails': [{
                 'created_at': '$TIME',
-                'raw_message_id': '$ID',
+                'raw_message': '$ID',
                 'subject': 'subject',
                 'recipient':
                 'foo@bar.com',
