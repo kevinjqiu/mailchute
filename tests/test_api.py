@@ -1,11 +1,27 @@
 import datetime
 
+from unittest.mock import patch, call
 from webtest import TestApp
 from tests.base import BaseTestCase, Fixture
 
 from mailchute.api.resource import app
+from mailchute.api.cli import main as api_main
 from mailchute.db import session
 from mailchute.model import IncomingEmail
+
+
+@patch('mailchute.api.cli.settings')
+@patch('mailchute.api.cli.app')
+@patch('mailchute.api.cli.bottle')
+def test_api_is_served_at_the_expected_address(
+        bottle, app, settings):
+    settings.API = {
+        'host': 'host',
+        'port': 'port',
+    }
+    api_main()
+    assert [call(app, host='host', port='port')] == \
+        bottle.run.call_args_list
 
 
 class ApiTestCase(BaseTestCase):
