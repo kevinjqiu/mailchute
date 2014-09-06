@@ -29,3 +29,4 @@ class IncomingEmail(Base):
     raw_message_id = sa.Column(
         sa.String(32), sa.ForeignKey('raw_message.raw_message_id'))
     raw_message = sa.orm.relationship(RawMessage)
+    deleted_at = sa.Column(sa.DateTime, default=None)
