@@ -23,7 +23,7 @@ def get_emails():
     return emails
 
 
-app.route('/emails/<email_id:int>', ['OPTIONS'])(lambda email_id: {})
+app.route('/emails/<email_id:int>', ['OPTIONS'])(lambda *a, **kw: {})
 @app.route('/emails/<email_id:int>', ['DELETE'])
 @response('emails', None)
 def delete_email(email_id):
@@ -35,8 +35,8 @@ def delete_email(email_id):
     db.session.commit()
 
 
-app.route('/raw_messages/<raw_message_id>', ['OPTIONS'])(lambda rm_id: {})
-@app.route('/raw_messages/<raw_message_id>', ['GET', 'OPTIONS'])
+app.route('/raw_messages/<raw_message_id>', ['OPTIONS'])(lambda *a, **kw: {})
+@app.route('/raw_messages/<raw_message_id>', ['GET'])
 @response('raw_messages', RawMessageDTO)
 def get_raw_message(raw_message_id):
     try:
