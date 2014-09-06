@@ -1,8 +1,25 @@
 from tests.base import BaseTestCase, Fixture
 from mailchute import db
 from mailchute.smtpd.mailchute import MessageProcessor
+from mailchute.smtpd.cli import main as smtpd_main
 from mailchute.model import IncomingEmail
-from unittest.mock import patch
+from unittest.mock import patch, call
+
+
+class TestSMTPDCli(object):
+    @patch('mailchute.smtpd.cli.settings')
+    @patch('mailchute.smtpd.cli.MailchuteSMTPServer')
+    @patch('mailchute.smtpd.cli.asyncore')
+    def test_smtpd_is_served_at_the_expected_addresses(
+            self, asyncore, smtp_server_class, settings):
+        settings.SMTPD = {
+            'host': 'host',
+            'port': 'port',
+        }
+        asyncore.loop.side_effect = KeyboardInterrupt
+        smtpd_main()
+        assert [call(('host', 'port'), None)] == \
+            smtp_server_class.call_args_list
 
 
 class TestMessageProcessor(BaseTestCase):
