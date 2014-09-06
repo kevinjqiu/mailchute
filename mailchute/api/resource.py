@@ -1,5 +1,7 @@
 import bottle
 import sqlalchemy
+import datetime
+
 from mailchute import db
 from mailchute.api.exception import NotFound, BadRequest
 from mailchute.model import IncomingEmail, RawMessage
@@ -34,7 +36,8 @@ def delete_email(email_id):
         raise NotFound
 
     model = db.session.query(IncomingEmail).filter_by(id=email_id).one()
-    db.session.delete(model)
+    model.deleted_at = datetime.datetime.now()
+    db.session.add(model)
     db.session.commit()
 
 
