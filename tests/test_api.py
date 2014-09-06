@@ -1,3 +1,5 @@
+import datetime
+
 from webtest import TestApp
 from tests.base import BaseTestCase, Fixture
 
@@ -27,9 +29,10 @@ class TestDeleteEmail(ApiTestCase):
         )
         response = self.app.delete('/emails/{}'.format(email1.id), status=200)
         assert b'' == response.body
-        emails = session.query(IncomingEmail).all()
-        assert 1 == len(emails)
-        assert email2.id == emails[0].id
+        email = session.query(IncomingEmail).filter_by(id=email1.id).one()
+        assert email.deleted_at is not None
+        email = session.query(IncomingEmail).filter_by(id=email2.id).one()
+        assert email2.id == email.id
 
     def test_delete_non_existing_email(self):
         self.app.delete('/emails/99', status=404)
@@ -79,6 +82,27 @@ class TestGetEmail(ApiTestCase):
             }],
         }
         assert expected == response_json
+
+    def test_does_not_return_deleted_emails(self):
+        email1 = self.create_incoming_email(
+            sender='foobar@example.com',
+            recipient='foo@bar.com',
+            raw_message='RAW',
+            subject='subject',
+            deleted_at=None,
+        )
+        self.create_incoming_email(
+            sender='foobar@example.com',
+            recipient='foo@bar.com',
+            raw_message='RAW',
+            subject='subject',
+            deleted_at=datetime.datetime.now(),
+        )
+        response = self.app.get('/emails?inbox=foo@bar.com')
+
+        assert '200 OK' == response.status
+        assert 1 == len(response.json['emails'])
+        assert email1.id == response.json['emails'][0]['id']
 
 
 class TestGetRawMessage(ApiTestCase):
