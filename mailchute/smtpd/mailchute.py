@@ -44,7 +44,7 @@ class MessageProcessor(object):
 
             db.session.commit()
             logger.info("Message saved")
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             logger.exception(e)
             db.session.rollback()
 
