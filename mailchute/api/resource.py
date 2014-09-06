@@ -18,7 +18,10 @@ def get_emails():
     if not inbox:
         raise BadRequest("'inbox' must be specified")
     emails = (
-        db.session.query(IncomingEmail).filter_by(recipient=inbox).all()
+        db.session.query(IncomingEmail)
+        .filter_by(recipient=inbox)
+        .filter(IncomingEmail.deleted_at.is_(None))
+        .all()
     )
     return emails
 
