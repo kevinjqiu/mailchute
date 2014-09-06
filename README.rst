@@ -17,7 +17,7 @@ Mailchute is an open source implementation of the `mailinator <http://mailinator
 
 * smtpd - A simple SMTP server for receiving emails and store them
 * api - A RESTful API for retrieving stored emails
-* web - A web front-end for reading emails
+* web - A web front-end for reading emails: `mailchute-ui <https://github.com/kevinjqiu/mailchute-ui>`__
 
 .. |Build Status| image:: https://travis-ci.org/kevinjqiu/mailchute.png?branch=master
     :target: https://travis-ci.org/kevinjqiu/mailchute
