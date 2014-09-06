@@ -63,7 +63,13 @@ class IncomingEmailDTO(dict):
 
 class RawMessageDTO(dict):
     def __init__(self, model):
+        from email.parser import Parser
+        email = Parser().parsestr(model.message)
+        if email.is_multipart():
+            message = email.get_payload()[0].get_payload()
+        else:
+            message = email.get_payload()
         super(RawMessageDTO, self).__init__(
             id=model.raw_message_id,
-            message=model.message,
+            message=message,
         )

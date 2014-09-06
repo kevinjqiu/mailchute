@@ -1,3 +1,4 @@
+import datetime
 import smtpd
 from email.parser import Parser
 from mailchute import db
@@ -34,6 +35,7 @@ class MessageProcessor(object):
                         sender=mailfrom, recipient=recipient,
                         raw_message=raw_message,
                         subject=email['subject'],
+                        created_at=datetime.datetime.now(),
                     )
                     db.session.add(incoming_email)
                 else:
