@@ -1,5 +1,5 @@
 from webtest import TestApp
-from tests.base import BaseTestCase
+from tests.base import BaseTestCase, Fixture
 
 from mailchute.api.resource import app
 from mailchute.db import session
@@ -108,3 +108,14 @@ class TestGetRawMessage(ApiTestCase):
 
         assert '200 OK' == response.status
         assert expected == response_json
+
+    def test_message_multipart(self):
+        email = self.create_incoming_email(
+            sender='foobar@example.com',
+            recipient='foo@bar.com',
+            raw_message=Fixture.INCOMING_EMAIL)
+
+        response = self.app.get('/raw_messages/{0}'.format(
+            email.raw_message_id))
+
+        assert 'another test\n' == response.json['raw_messages'][0]['message']
