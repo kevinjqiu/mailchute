@@ -41,16 +41,6 @@ class ResponseDTO(dict):
         })
 
 
-class InboxDTO(dict):
-    def __init__(self, model):
-        super(InboxDTO, self).__init__(
-            id=model.name,
-            name=model.name,
-            num_of_emails=len(model.emails),
-            emails=list(map(IncomingEmailDTO, model.emails)),
-        )
-
-
 class IncomingEmailDTO(dict):
     def __init__(self, model):
         super(IncomingEmailDTO, self).__init__(
