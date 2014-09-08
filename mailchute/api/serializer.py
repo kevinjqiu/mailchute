@@ -19,7 +19,7 @@ def response(root_key, dto_class):
                     result = [result]
 
                 if dto_class is None:
-                    return ''
+                    return {}
                 else:
                     return ResponseDTO(
                         root_key, list(map(dto_class, result)))

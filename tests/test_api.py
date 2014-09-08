@@ -44,7 +44,7 @@ class TestDeleteEmail(ApiTestCase):
             subject='subject',
         )
         response = self.app.delete('/emails/{}'.format(email1.id), status=200)
-        assert b'' == response.body
+        assert b'{}' == response.body
         email = session.query(IncomingEmail).filter_by(id=email1.id).one()
         assert email.deleted_at is not None
         email = session.query(IncomingEmail).filter_by(id=email2.id).one()
