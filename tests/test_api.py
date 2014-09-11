@@ -4,7 +4,7 @@ from unittest.mock import patch, call
 from webtest import TestApp
 from tests.base import BaseTestCase, Fixture
 
-from mailchute.api.resource import app
+from mailchute.api.app import app
 from mailchute.api.cli import main as api_main
 from mailchute.db import session
 from mailchute.model import IncomingEmail

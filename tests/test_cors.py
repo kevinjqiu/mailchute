@@ -1,5 +1,5 @@
 from webtest import TestApp
-from mailchute.api.resource import app
+from mailchute.api.app import app
 
 
 app = TestApp(app)
