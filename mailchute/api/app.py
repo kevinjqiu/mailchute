@@ -1,4 +1,5 @@
 import bottle
+from bottle import response
 from mailchute.api import resource
 
 
@@ -22,9 +23,9 @@ def create_app():
         ALLOWED_METHODS = 'PUT, GET, POST, DELETE, OPTIONS'
         ALLOWED_HEADERS = \
             'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
-        bottle.response.headers['Access-Control-Allow-Origin'] = '*'
-        bottle.response.headers['Access-Control-Allow-Methods'] = ALLOWED_METHODS
-        bottle.response.headers['Access-Control-Allow-Headers'] = ALLOWED_HEADERS
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = ALLOWED_METHODS
+        response.headers['Access-Control-Allow-Headers'] = ALLOWED_HEADERS
 
     return app
 
