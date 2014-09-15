@@ -12,10 +12,12 @@ logger = Logger(__name__)
 
 class MessageProcessor(object):
     def _should_persist(self, recipient):
-        allowed_receiver_domain = settings.RECEIVER_DOMAIN
         recipient_domain = recipient.split('@')[1].lower()
-        return (allowed_receiver_domain is None
-                or recipient_domain == settings.RECEIVER_DOMAIN)
+        allowed_receiver_domains = settings.RECEIVER_DOMAIN
+        if allowed_receiver_domains:
+            allowed_receiver_domains = allowed_receiver_domains.split(',')
+        return (allowed_receiver_domains is None
+                or recipient_domain in allowed_receiver_domains)
 
     def __call__(self, peer, mailfrom, recipients, data):
         try:
